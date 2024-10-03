@@ -1,14 +1,14 @@
-#include <iostream>
-#include <sstream>
-#include <fstream>
-#include <vector>
-#include <string>
-#include <iomanip> // Para std::fixed e std::setprecision
-#include <cstdio>  // Para remove e rename
+#include "../../include/Geral.h"
 
-using namespace std;
-
-// Função para ler produtos da Base1 e armazenar em um vetor
+/*
+  Função: LerBase1
+  Descrição: Lê os produtos da Base1 a partir do arquivo especificado e
+             armazena cada linha em um vetor.
+  Parâmetros:
+    - const string& caminho: O caminho do arquivo da Base1.
+    - vector<string>& produtos: O vetor onde os produtos serão armazenados.
+  Retorno: void - Não retorna nada.
+*/
 void LerBase1(const string& caminho, vector<string>& produtos) {
     string linha;
     ifstream arquivoBase1(caminho);
@@ -18,7 +18,16 @@ void LerBase1(const string& caminho, vector<string>& produtos) {
     arquivoBase1.close();
 }
 
-// Função para atualizar a quantidade de produtos conforme as vendas
+/*
+  Função: AtualizarQuantidades
+  Descrição: Atualiza a quantidade dos produtos no vetor com base nas vendas
+             registradas em um arquivo. Cada linha do arquivo de vendas deve
+             conter o ID do produto e a quantidade vendida.
+  Parâmetros:
+    - vector<string>& produtos: O vetor de produtos a ser atualizado.
+    - const string& caminhoVendas: O caminho do arquivo que contém as vendas.
+  Retorno: void - Não retorna nada.
+*/
 void AtualizarQuantidades(vector<string>& produtos, const string& caminhoVendas) {
     string linha;
     ifstream arquivoVendas(caminhoVendas);
@@ -63,7 +72,15 @@ void AtualizarQuantidades(vector<string>& produtos, const string& caminhoVendas)
     arquivoVendas.close();
 }
 
-// Função para gravar os produtos atualizados na Base1
+/*
+  Função: GravarBase1
+  Descrição: Grava as informações atualizadas dos produtos de volta na Base1,
+             sobrescrevendo o arquivo existente.
+  Parâmetros:
+    - const string& caminhoBase1: O caminho do arquivo da Base1.
+    - const vector<string>& produtos: O vetor de produtos a ser gravado.
+  Retorno: void - Não retorna nada.
+*/
 void GravarBase1(const string& caminhoBase1, const vector<string>& produtos) {
     ofstream arquivoBase1(caminhoBase1);
     for (const auto& produto : produtos) {
@@ -72,8 +89,17 @@ void GravarBase1(const string& caminhoBase1, const vector<string>& produtos) {
     arquivoBase1.close();
 }
 
+/*
+  Função: Gravador
+  Descrição: Função principal para gerenciar o processo de leitura dos produtos
+             da Base1, atualização das quantidades com base nas vendas e gravação
+             das informações atualizadas de volta na Base1.
+  Parâmetros:
+    - string CaminhoDBEstoque: O caminho do arquivo da Base1 (estoque).
+    - string CaminhoArqTemp: O caminho do arquivo que contém as vendas.
+  Retorno: void - Não retorna nada.
+*/
 void Gravador(string CaminhoDBEstoque, string CaminhoArqTemp) {
-
     // Lê produtos da Base1
     vector<string> produtos; // Vetor para armazenar linhas da Base1
     LerBase1(CaminhoDBEstoque, produtos);
@@ -83,5 +109,4 @@ void Gravador(string CaminhoDBEstoque, string CaminhoArqTemp) {
 
     // Grava os produtos atualizados na Base1
     GravarBase1(CaminhoDBEstoque, produtos);
-
 }
